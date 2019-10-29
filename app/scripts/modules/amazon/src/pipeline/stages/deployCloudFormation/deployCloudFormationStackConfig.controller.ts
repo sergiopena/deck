@@ -56,8 +56,16 @@ export class DeployCloudFormationStackConfigController implements IController {
     return this.$scope.stage.isChangeSet;
   }
 
+  public failOnChangeSetWithReplacement() {
+    return this.$scope.stage.failOnChangeSetWithReplacement;
+  }
+
   public toggleChangeSet() {
     this.$scope.stage.isChangeSet = !this.$scope.stage.isChangeSet;
+  }
+
+  public toggleFailOnChangeSetWithReplacement() {
+    this.$scope.stage.failOnChangeSetWithReplacement = !this.$scope.stage.failOnChangeSetWithReplacement;
   }
 
   public onStackArtifactEdited = (artifact: IArtifact) => {
