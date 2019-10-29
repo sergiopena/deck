@@ -45,6 +45,7 @@ import {
 
 import { DEPLOY_CLOUDFORMATION_STACK_STAGE } from './pipeline/stages/deployCloudFormation/deployCloudFormationStackStage';
 import { CLOUDFORMATION_TEMPLATE_ENTRY } from './pipeline/stages/deployCloudFormation/cloudFormationTemplateEntry.component';
+import { AWS_EVALUATE_CLOUD_FORMATION_CHANGE_SET_EXECUTION_SERVICE } from './pipeline/stages/deployCloudFormation/evaluateCloudFormationChangeSetExecution.service';
 
 // load all templates into the $templateCache
 const templates = require.context('./', true, /\.html$/);
@@ -82,6 +83,7 @@ module(AMAZON_MODULE, [
   require('./search/searchResultFormatter').name,
   DEPLOY_CLOUDFORMATION_STACK_STAGE,
   CLOUDFORMATION_TEMPLATE_ENTRY,
+  AWS_EVALUATE_CLOUD_FORMATION_CHANGE_SET_EXECUTION_SERVICE,
 ]).config(() => {
   CloudProviderRegistry.registerProvider('aws', {
     name: 'Amazon',

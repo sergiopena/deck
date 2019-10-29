@@ -141,6 +141,19 @@ const helpContents: { [key: string]: string } = {
       </p>
   `,
   'aws.cloudformation.expectedArtifact': `The artifact that is to be applied to this stage. The artifact should represent a valid cloudformation template.`,
+  'aws.cloudformation.changeSet.options': `<p>Action to take when the created ChangeSet contains a replacement.</p>
+        <p>
+          <b>ask:</b> Execution will be put on hold asking for user feedback.
+        </p>
+        <p>
+          <b>skip it:</b> ChangeSet will not be executed and stage will continue.
+        </p>
+        <p>
+          <b>execute it</b> ChangeSet will be executed.
+        </p>
+        <p>
+          <b>fail stage</b> ChangeSet will not be executed and the stage will fail.
+        </p>`,
 };
 
 Object.keys(helpContents).forEach(key => HelpContentsRegistry.register(key, helpContents[key]));
