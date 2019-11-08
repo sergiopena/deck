@@ -64,10 +64,6 @@ export class DeployCloudFormationStackConfigController implements IController {
     return this.$scope.stage.executeChangeSet;
   }
 
-  public capabilities() {
-    return this.$scope.stage.capabilities;
-  }
-
   public toggleChangeSet() {
     this.$scope.stage.isChangeSet = !this.$scope.stage.isChangeSet;
   }
@@ -78,14 +74,6 @@ export class DeployCloudFormationStackConfigController implements IController {
 
   public toggleFailOnChangeSetWithReplacement() {
     this.$scope.stage.failOnChangeSetWithReplacement = !this.$scope.stage.failOnChangeSetWithReplacement;
-  }
-
-  public toggleCapabilities() {
-    if (this.$scope.stage.capabilities) {
-      delete this.$scope.stage.capabilities;
-    } else {
-      this.$scope.stage.capabilities = ['CAPABILITY_NAMED_IAM'];
-    }
   }
 
   public onStackArtifactEdited = (artifact: IArtifact) => {

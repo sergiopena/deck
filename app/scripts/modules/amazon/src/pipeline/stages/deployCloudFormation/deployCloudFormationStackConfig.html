@@ -22,50 +22,10 @@
           <strong>Create CloudFormation ChangeSet</strong>
         </label>
       </stage-config-field>
-      <div ng-if="ctrl.isChangeSet()">
-        <stage-config-field label="ChangeSet name">
-          <label class="sm-label-right">
-            <input type="text" class="form-control input-sm" ng-model="stage.changeSetName" />
-          </label>
-        </stage-config-field>
-        <stage-config-field label="">
-          <label>
-            <input type="checkbox" ng-checked="ctrl.executeChangeSet()" ng-click="ctrl.toggleExecuteChangeSet()" />
-            <strong>Execute ChangeSet</strong>
-          </label>
-        </stage-config-field>
-        <div ng-if="ctrl.executeChangeSet()">
-          <stage-config-field label="">
-            <label>
-              <input
-                type="checkbox"
-                ng-checked="ctrl.failOnChangeSetWithReplacement()"
-                ng-click="ctrl.toggleFailOnChangeSetWithReplacement()"
-              />
-              <strong>Fail stage when the ChangeSet has replacements</strong>
-            </label>
-          </stage-config-field>
-          <stage-config-field label="When ChangeSet is a replacement">
-            <label>
-              <select class="form-control input-sm" ng-model="stage.actionOnReplacement" required>
-                <option value="skip">skip it</option>
-                <option value="run">execute it</option>
-                <option value="fail">fail stage</option>
-              </select>
-              <strong>if changeSet contains a replacement</strong>
-            </label>
-          </stage-config-field>
-        </div>
-      </div>
+
       <stage-config-field label="IAM role ARN">
         <label class="sm-label-right">
           <input type="text" class="form-control input-sm" ng-model="stage.roleARN" />
-        </label>
-      </stage-config-field>
-      <stage-config-field label="">
-        <label>
-          <input type="checkbox" ng-checked="ctrl.capabilities()" ng-click="ctrl.toggleCapabilities()" />
-          <strong>Enable CAPABILITY_NAMED_IAM</strong>
         </label>
       </stage-config-field>
       <stage-config-field label="Source" help-key="aws.cloudformation.source">
@@ -105,6 +65,34 @@
       update-pipeline="ctrl.updatePipeline"
     >
     </stage-artifact-selector-delegate>
+    <div ng-if="ctrl.isChangeSet()">
+      <hr />
+      <h4>ChangeSet Configuration</h4>
+      <stage-config-field label="ChangeSet name">
+        <label class="sm-label-right">
+          <input type="text" class="form-control input-sm" ng-model="stage.changeSetName" />
+        </label>
+      </stage-config-field>
+      <stage-config-field label="" field-colums="6">
+        <label>
+          <input type="checkbox" ng-checked="ctrl.executeChangeSet()" ng-click="ctrl.toggleExecuteChangeSet()" />
+        </label>
+        <strong>Execute CloudFormation ChangeSet</strong>
+      </stage-config-field>
+      <div ng-if="ctrl.isChangeSet()">
+        <div ng-if="ctrl.executeChangeSet()">
+          <stage-config-field label="When ChangeSet is a replacement">
+            <label>
+              <select class="form-control input-sm" ng-model="stage.actionOnReplacement" required>
+                <option value="skip">skip it</option>
+                <option value="run">execute it</option>
+                <option value="fail">fail stage</option>
+              </select>
+            </label>
+          </stage-config-field>
+        </div>
+      </div>
+    </div>
     <hr />
     <stage-config-field label="Parameters" field-columns="6">
       <map-editor model="ctrl.$scope.stage.parameters" add-button-label="Add parameter"></map-editor>
