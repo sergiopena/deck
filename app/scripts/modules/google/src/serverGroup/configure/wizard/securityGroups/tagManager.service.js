@@ -2,11 +2,14 @@
 
 import _ from 'lodash';
 
-const angular = require('angular');
+import { module } from 'angular';
 
 import { FirewallLabels } from '@spinnaker/core';
 
-module.exports = angular.module('spinnaker.deck.gce.tagManager.service', []).factory('gceTagManager', function() {
+export const GOOGLE_SERVERGROUP_CONFIGURE_WIZARD_SECURITYGROUPS_TAGMANAGER_SERVICE =
+  'spinnaker.deck.gce.tagManager.service';
+export const name = GOOGLE_SERVERGROUP_CONFIGURE_WIZARD_SECURITYGROUPS_TAGMANAGER_SERVICE; // for backwards compatibility
+module(GOOGLE_SERVERGROUP_CONFIGURE_WIZARD_SECURITYGROUPS_TAGMANAGER_SERVICE, []).factory('gceTagManager', function() {
   const resetKeys = ['command', 'securityGroups', 'securityGroupObjectsKeyedByTag', 'securityGroupObjectsKeyedById'];
 
   this.reset = () => {
@@ -73,8 +76,8 @@ module.exports = angular.module('spinnaker.deck.gce.tagManager.service', []).fac
   };
 
   this.inferSelectedSecurityGroupFromTag = _.debounce(tagName => {
-    let securityGroupObjectsWithTag = this.securityGroupObjectsKeyedByTag[tagName],
-      c = this.command;
+    let securityGroupObjectsWithTag = this.securityGroupObjectsKeyedByTag[tagName];
+    const c = this.command;
 
     if (securityGroupObjectsWithTag) {
       securityGroupObjectsWithTag = _.filter(securityGroupObjectsWithTag, sg => sg.network === this.command.network);
@@ -94,8 +97,8 @@ module.exports = angular.module('spinnaker.deck.gce.tagManager.service', []).fac
   }, 100);
 
   this.updateSelectedTags = () => {
-    const c = this.command,
-      tags = c.tags.map(t => t.value);
+    const c = this.command;
+    const tags = c.tags.map(t => t.value);
 
     getSecurityGroupObjectsFromIds(c.securityGroups).forEach(sg => {
       if (sg.selectedTags) {
@@ -109,9 +112,9 @@ module.exports = angular.module('spinnaker.deck.gce.tagManager.service', []).fac
   };
 
   this.addTag = tagName => {
-    let c = this.command,
-      tags = c.tags,
-      securityGroupObjectsWithTag = this.securityGroupObjectsKeyedByTag[tagName];
+    const c = this.command;
+    const tags = c.tags;
+    let securityGroupObjectsWithTag = this.securityGroupObjectsKeyedByTag[tagName];
 
     if (securityGroupObjectsWithTag) {
       securityGroupObjectsWithTag = _.filter(securityGroupObjectsWithTag, sg => sg.network === this.command.network);
@@ -149,9 +152,9 @@ module.exports = angular.module('spinnaker.deck.gce.tagManager.service', []).fac
   };
 
   this.removeTag = tagName => {
-    const c = this.command,
-      securityGroupIds = c.securityGroups || [],
-      securityGroupObjects = getSecurityGroupObjectsFromIds(securityGroupIds);
+    const c = this.command;
+    const securityGroupIds = c.securityGroups || [];
+    const securityGroupObjects = getSecurityGroupObjectsFromIds(securityGroupIds);
 
     securityGroupObjects.forEach(sg => {
       if (sg.selectedTags) {
@@ -163,9 +166,9 @@ module.exports = angular.module('spinnaker.deck.gce.tagManager.service', []).fac
   };
 
   this.removeSecurityGroup = securityGroupId => {
-    const securityGroupObject = this.securityGroupObjectsKeyedById[securityGroupId],
-      tagsToRemove = securityGroupObject.selectedTags,
-      c = this.command;
+    const securityGroupObject = this.securityGroupObjectsKeyedById[securityGroupId];
+    const tagsToRemove = securityGroupObject.selectedTags;
+    const c = this.command;
 
     getSecurityGroupObjectsFromIds(c.securityGroups).forEach(sg => {
       if (sg.selectedTags) {
@@ -182,8 +185,8 @@ module.exports = angular.module('spinnaker.deck.gce.tagManager.service', []).fac
   };
 
   this.getToolTipContent = tagName => {
-    const groups = _.get(this, ['securityGroupObjectsKeyedByTag', tagName]),
-      groupIds = groups ? groups.filter(sg => sg.network === this.command.network).map(sg => sg.id) : [];
+    const groups = _.get(this, ['securityGroupObjectsKeyedByTag', tagName]);
+    const groupIds = groups ? groups.filter(sg => sg.network === this.command.network).map(sg => sg.id) : [];
 
     return `This tag associates this server group with ${
       groupIds.length > 1 ? FirewallLabels.get('firewalls') : FirewallLabels.get('firewall')

@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const { TypedCssModulesPlugin } = require('typed-css-modules-webpack-plugin');
 
 const CACHE_INVALIDATE = getCacheInvalidateString();
 const NODE_MODULE_PATH = path.join(__dirname, 'node_modules');
@@ -16,6 +17,7 @@ function configure(env, webpackOpts) {
   const WEBPACK_MODE = (webpackOpts && webpackOpts.mode) || 'development';
   const IS_PRODUCTION = WEBPACK_MODE === 'production';
 
+  // eslint-disable-next-line no-console
   console.log('Webpack mode: ' + WEBPACK_MODE);
 
   const config = {
@@ -129,7 +131,7 @@ function configure(env, webpackOpts) {
             { loader: 'cache-loader', options: { cacheIdentifier: CACHE_INVALIDATE } },
             { loader: 'thread-loader', options: { workers: THREADS } },
             { loader: 'ts-loader', options: { happyPackMode: true } },
-            { loader: 'tslint-loader' },
+            { loader: 'eslint-loader' },
           ],
           exclude: /node_modules/,
         },
@@ -158,7 +160,6 @@ function configure(env, webpackOpts) {
                 localIdentName: '[name]__[local]--[hash:base64:8]',
               },
             },
-            { loader: 'typed-css-modules-loader' },
             { loader: 'postcss-loader' },
           ],
         },
@@ -181,7 +182,10 @@ function configure(env, webpackOpts) {
       ],
     },
     plugins: [
-      new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true, tslint: true }),
+      new TypedCssModulesPlugin({
+        globPattern: '**/*.module.css',
+      }),
+      new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
       new CopyWebpackPlugin([
         {
           from: `${NODE_MODULE_PATH}/@spinnaker/styleguide/public/styleguide.html`,

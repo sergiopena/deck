@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { get } from 'lodash';
 
@@ -87,7 +87,6 @@ export class PageModal extends React.Component<IPageModalProps, IPageModalState>
       application: ownerApp,
       title: `Sending page to ${this.state.pageCount} policies`,
       modalInstance: TaskMonitor.modalInstanceEmulation(() => this.close()),
-      onTaskComplete: () => this.props.closeCallback(true),
     });
 
     const submitMethod = () => {
