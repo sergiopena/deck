@@ -222,5 +222,10 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "eslintConfig": {
+    "rules": {
+      "no-console": "off"
+    }
   }
 }

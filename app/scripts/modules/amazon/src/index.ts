@@ -12,3 +12,5 @@ export * from './serverGroup';
 export * from './templates';
 export * from './vpc';
 export * from './instance';
+export * from './pipeline/stages/deployCloudFormation';
+export * from '.';

@@ -65,6 +65,17 @@
       update-pipeline="ctrl.updatePipeline"
     >
     </stage-artifact-selector-delegate>
+
+    <cloud-formation-change-set-info
+      stage="stage"
+      pipeline="pipeline"
+      application="application"
+      ng-if="stage.isChangeSet"
+    >
+    </cloud-formation-change-set-info>
+
+    <cloud-fromation-change-set-info stage="stage"></cloud-fromation-change-set-info>
+
     <div ng-if="stage.isChangeSet">
       <hr />
       <h4>ChangeSet Configuration</h4>
@@ -73,6 +84,7 @@
           <input type="text" class="form-control input-sm" ng-model="stage.changeSetName" />
         </label>
       </stage-config-field>
+
       <stage-config-field label="" field-colums="6">
         <label>
           <input type="checkbox" ng-checked="stage.executeChangeSet" ng-click="ctrl.toggleExecuteChangeSet()" />

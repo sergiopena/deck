@@ -14,9 +14,11 @@ import { EvaluateCloudFormationChangeSetExecutionDetails } from './evaluateCloud
 
 import { DeployCloudFormationStackConfigController } from './deployCloudFormationStackConfig.controller';
 
+import { CLOUD_FORMATION_CHANGE_SET_INFO } from './cloudFormationChangeSet.component';
+import { CLOUD_FROMATION_CHANGE_SET_INFO } from './CloudFromationChangeSetInfo';
 export const DEPLOY_CLOUDFORMATION_STACK_STAGE = 'spinnaker.amazon.pipeline.stages.deployCloudFormationStage';
 
-module(DEPLOY_CLOUDFORMATION_STACK_STAGE, [])
+module(DEPLOY_CLOUDFORMATION_STACK_STAGE, [CLOUD_FORMATION_CHANGE_SET_INFO, CLOUD_FROMATION_CHANGE_SET_INFO])
   .config(() => {
     Registry.pipeline.registerStage({
       label: 'Deploy (CloudFormation Stack)',
